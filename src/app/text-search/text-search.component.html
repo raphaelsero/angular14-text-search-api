@@ -1,0 +1,150 @@
+<mat-toolbar style="width:100%;">
+  <img (click)="navigateItd()" src="/assets/ITD-Modern.png" width="2231" height="847"
+    alt="Information Technology Department" id="logo" data-height-percentage="54" data-actual-width="1261"
+    data-actual-height="478.734">
+</mat-toolbar>
+
+<mat-card style="  border-radius: 25px;
+padding: 20px;
+width: 90%;
+height: 90%;
+margin-top: 5%;
+box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+" class="center">
+  <mat-card-title class="center" style="text-align:center;">Text Search!</mat-card-title>
+  <br>
+  <mat-card-subtitle>
+    This component takes in an input string and a search string and returns an integer representing the amount of times
+    the search string appears in the input string.
+    <br>
+    It also supports options for full word search and case sensitivity!
+    <br>
+    <br>
+    <p>
+      Example:
+      <br />Text : "Coders who code don't always eat cod. Exclaimed the coder who codes CODE."
+      <br />Text to search: Cod
+      <br />Full word = false
+      <br />Case sensitive = false
+      <br />Returns 6
+    </p>
+  </mat-card-subtitle>
+  <mat-card-content>
+
+  </mat-card-content>
+  <mat-card-actions>
+
+    <form class="example-form">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Search String</mat-label>
+        <input matInput [(ngModel)]="searchArgs.searchString" value="{{searchArgs.searchString}}" placeholder="Ex. Cod"
+          name="searchString">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Input String</mat-label>
+        <textarea matInput [(ngModel)]="searchArgs.inputString" value="{{searchArgs.inputString}}"
+          placeholder="Ex. Coders who code..." name="inputString"></textarea>
+      </mat-form-field>
+    </form>
+
+    <section class="section">
+      <mat-checkbox [(ngModel)]="searchArgs.isFullText" class="margin">Full Word</mat-checkbox>
+      <br>
+      <mat-checkbox [(ngModel)]="searchArgs.isCaseSensitive" class="margin">Case Sensitive</mat-checkbox>
+      <br>
+      <br>
+      <button mat-raised-button (click)="post()" color="primary">Enter</button>
+      <button mat-button (click)="clear()" color="accent">Clear</button>
+    </section>
+  </mat-card-actions>
+</mat-card>
+
+<br>
+<br>
+
+<div *ngIf="response >= 0">
+  <mat-divider></mat-divider>
+  <br>
+  <br>
+  <mat-card style="border-radius: 25px;
+    padding: 20px;
+    width: 90%;
+    height: 90%;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);" class="center">
+    <mat-card-title class="center" style="text-align:center;">Result!</mat-card-title>
+    <!-- <mat-spinner class="center" ></mat-spinner> -->
+    <mat-card-content>
+      <div class="center" style="font-size: xxx-large; text-align: center;">{{response}}</div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="save()" color="primary">Save</button>
+      <button mat-button (click)="clear()" color="accent">Clear</button>
+    </mat-card-actions>
+  </mat-card>
+  <br>
+  <br>
+</div>
+
+<div *ngIf="searchArgsResponseHistory.length > 0">
+  <mat-divider></mat-divider>
+  <br>
+  <br>
+  <mat-card style="border-radius: 25px;
+    padding: 20px;
+    width: 90%;
+    height: 90%;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);" class="center">
+    <mat-card-title class="center" style="text-align:center;">History</mat-card-title>
+    <!-- <mat-spinner class="center" ></mat-spinner> -->
+    <mat-card-content>
+      <br>
+
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort style="table-layout: fixed; width:100%;">
+
+          <ng-container matColumnDef="searchString">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Search String </th>
+            <td mat-cell *matCellDef="let row"> {{row.searchString}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="inputString">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Input String </th>
+            <td mat-cell *matCellDef="let row"> {{row.inputString}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="isFullText">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Word </th>
+            <td mat-cell *matCellDef="let row"> {{row.isFullText}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="isCaseSensitive">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Case Sensitive </th>
+            <td mat-cell *matCellDef="let row"> {{row.isCaseSensitive}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="response">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Result </th>
+            <td mat-cell *matCellDef="let row"> {{row.response}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> UTC<br> Date </th>
+            <td mat-cell *matCellDef="let row"> {{row.date | date:'yyyy-MM-dd hh:mm a' : 'UTCz'}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="clear()" color="accent">Clear</button>
+    </mat-card-actions>
+  </mat-card>
+  <br>
+  <br>
+</div>

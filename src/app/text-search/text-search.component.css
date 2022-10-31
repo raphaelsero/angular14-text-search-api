@@ -1,0 +1,31 @@
+#logo {
+  width: auto;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  margin-bottom: 0;
+  max-height: 54%;
+  display: inline-block;
+  float: none;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  /* border: 3px solid green; */
+  padding: 10px;
+}
+
+.table {
+  width: 100%;
+  
+}
+
+th {
+max-width: 16.6%;}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+}
